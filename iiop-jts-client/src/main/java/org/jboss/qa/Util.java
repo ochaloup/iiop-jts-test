@@ -6,6 +6,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.omg.CORBA.SystemException;
+import org.omg.CORBA.ORBPackage.InvalidName;
+
+import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.jts.ORBManager;
 import com.arjuna.ats.jts.OTSManager;
 import com.arjuna.orbportability.ORB;
@@ -15,19 +19,19 @@ public class Util {
 	// private static CurrentImple corbaTx;
 	public static final String HOST = "127.0.0.1";
 	
-	public static void setJacorbSystemProperties() {
+	public static void setJacorbSystemProperties() throws InvalidName, SystemException {
 		 System.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
 		 System.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
-		 // System.setProperty("com.sun.CORBA.ORBUseDynamicStub", "true");
+		 // System.setProperty("com.sun.CORBA.ORBUseDynamicStub", "true");	
+	        ORB orb = com.arjuna.orbportability.ORB.getInstance("ClientSide");
+	        RootOA oa = com.arjuna.orbportability.OA.getRootOA(orb);
+	        orb.initORB(new String[] {}, null);
+	        oa.initOA();
+	        ORBManager.setORB(orb);
+	        ORBManager.setPOA(oa);
 	}
 	
-    public static void startCorbaTx() throws Throwable {    	
-        ORB orb = com.arjuna.orbportability.ORB.getInstance("ClientSide");
-        RootOA oa = com.arjuna.orbportability.OA.getRootOA(orb);
-        orb.initORB(new String[] {}, null);
-        oa.initOA();
-        ORBManager.setORB(orb);
-        ORBManager.setPOA(oa);
+    public static void startCorbaTx() throws Throwable {            
         OTSManager.get_current().begin();
     }
     
