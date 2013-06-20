@@ -16,6 +16,7 @@ Client
 - mvn clean compile
 - mvn exec:java 
   - for more logging add command line arg -Djava.util.logging.config.file=target/classes/logging.properties
+  - for another class would be run -Dmain.class=org.jboss.qa.IIOPEJB2Testing
 
 
 Just running with AS libraries:
