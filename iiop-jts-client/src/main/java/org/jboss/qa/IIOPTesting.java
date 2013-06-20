@@ -13,6 +13,8 @@ public class IIOPTesting {
 	public static void main(String[] args) throws Throwable {
 		String beanName = (args.length > 1) ? args[1] : BEAN_NAME; 
 		
+		Util.setJacorbSystemProperties();
+		
 		InitialContext context = Util.getContext();
 		
         final Object iiopObj = context.lookup(beanName);
