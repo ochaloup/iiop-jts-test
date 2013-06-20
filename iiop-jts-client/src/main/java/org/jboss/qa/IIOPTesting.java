@@ -23,10 +23,11 @@ public class IIOPTesting {
         
         Util.startCorbaTx();
         try {
-	        String a = result.helloMandatory();
-	        // String a = result.hello();
-	        
-	        System.out.println(a);
+        	String a = result.hello();
+        	System.out.println("First call returns: " + a);
+        	
+	        a = result.helloMandatory();
+	        System.out.println("Second call with TX mandatory returns: " + a);
         } catch(Throwable e) {
         	e.printStackTrace();
         	System.out.println("Exception got on call - rollback");

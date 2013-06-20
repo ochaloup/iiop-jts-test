@@ -21,10 +21,15 @@ public class Util {
 		 // System.setProperty("com.sun.CORBA.ORBUseDynamicStub", "true");
 	}
 	
-    public static void startCorbaTx() throws Throwable {    	
+    public static void startCorbaTx() throws Throwable {
+    	setJacorbSystemProperties();
+    	final Properties prop = new Properties();
+    	prop.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
+		prop.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
+    	
         ORB orb = com.arjuna.orbportability.ORB.getInstance("ClientSide");
         RootOA oa = com.arjuna.orbportability.OA.getRootOA(orb);
-        orb.initORB(new String[] {}, null);
+        orb.initORB(new String[] {}, prop);
         oa.initOA();
         ORBManager.setORB(orb);
         ORBManager.setPOA(oa);
@@ -42,11 +47,16 @@ public class Util {
     public static InitialContext getContext() throws NamingException {
     	System.setProperty("com.sun.CORBA.ORBUseDynamicStub", "true");
     	
-        final Properties prope = new Properties();
+    	final Properties prope = new Properties();
+    	
+    	prope.put(Context.PROVIDER_URL, "corbaloc::" + HOST + ":3528/NameService");
+    	// prope.put(Context.PROVIDER_URL, "corbaloc::" + HOST + ":3528/JBoss/Naming/root");
+    	
+    	prope.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.iiop.naming:org.jboss.naming.client");
         prope.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.cosnaming.CNCtxFactory");
         prope.put(Context.OBJECT_FACTORIES, "org.jboss.tm.iiop.client.IIOPClientUserTransactionObjectFactory");
-        // prope.put(Context.PROVIDER_URL, "corbaloc::" + HOST + ":3528/JBoss/Naming/root");
-        prope.put(Context.PROVIDER_URL, "corbaloc::" + HOST + ":3528/NameService");
+        
+        
         return new InitialContext(prope);
     }
 }
