@@ -44,7 +44,8 @@
             <version>1.2.1</version>
             <configuration>
                 <mainClass>org.jboss.qa.IIOPTesting</mainClass>
-                <commandlineArgs/>
+                <!--<mainClass>org.jboss.qa.IIOPEJB2Testing</mainClass>-->
+                <!--<commandlineArgs>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044</commandlineArgs>-->
                 <arguments/>
             </configuration>
         </plugin>
