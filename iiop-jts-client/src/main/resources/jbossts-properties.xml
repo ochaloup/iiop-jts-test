@@ -34,7 +34,10 @@
             com.arjuna.orbportability.orb.PostSet1=com.arjuna.ats.jts.utils.ORBSetup
         </entry>
 
-
+        <!--
+          As per JBTM-1341 the user must provide a valid nodeIdentifier.
+        -->
+        <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
         <!--
           This class handles context propagation issues, and should never
           be commented out or removed.
