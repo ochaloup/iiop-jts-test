@@ -12,24 +12,35 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.jboss.narayana.jts</groupId>
+      <artifactId>jts</artifactId>
+      <version>5.0.0.M4-SNAPSHOT</version>
+    </dependency>
+
+    <!--
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts</artifactId>
       <version>5.0.0.M1</version>
     </dependency>
+    -->
 
     <dependency>
       <groupId>javax.ejb</groupId>
       <artifactId>ejb-api</artifactId>
       <version>3.0</version>
     </dependency>
-<!--
+
+    <!--
+    This would be needed for recovery manager call
     <dependency>
       <groupId>javax.transaction</groupId>
       <artifactId>jta</artifactId>
       <version>1.1</version>
     </dependency>
--->
+    -->
 
     <dependency>
       <groupId>org.jboss.logging</groupId>
