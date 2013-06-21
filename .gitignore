@@ -3,5 +3,6 @@
 target/
 .settings/
 *.log
+*.log.*
 ObjectStore/
 PutObjectStoreDirHere/
