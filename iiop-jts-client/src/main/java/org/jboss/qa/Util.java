@@ -23,6 +23,8 @@ public class Util {
 		 System.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
 		 System.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
 	    
+		 // Recovery manager has to be started on client when we want recovery 
+		 // and we start the transaction on client
 		 // RecoveryManager.main(new String[] {"-test"});
 		 
 		 orb = com.arjuna.orbportability.ORB.getInstance("ClientSide");
