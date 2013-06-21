@@ -14,7 +14,7 @@ public class IIOPEJB2Testing {
 	public static void main(String[] args) throws Throwable {
 		String beanName = (args.length > 1) ? args[1] : BEAN_NAME; 
 		
-		Util.setJacorbSystemProperties();
+		Util.presetOrb();
 		
 		InitialContext context = Util.getContext();
 		

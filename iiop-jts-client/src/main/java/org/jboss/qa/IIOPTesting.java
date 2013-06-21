@@ -13,17 +13,18 @@ public class IIOPTesting {
 	public static void main(String[] args) throws Throwable {
 		String beanName = (args.length > 1) ? args[1] : BEAN_NAME; 
 		
-		Util.setJacorbSystemProperties();
+		Util.presetOrb();
 		
 		InitialContext context = Util.getContext();
 		
         final Object iiopObj = context.lookup(beanName);
         final IIOPTestBeanHome beanHome = (IIOPTestBeanHome) PortableRemoteObject.narrow(iiopObj, IIOPTestBeanHome.class);
         final IIOPTestRemote result = beanHome.create();
-        
+
         Util.startCorbaTx();
         try {
-        	String a = result.hello();
+        	String a;
+        	a = result.hello();
         	System.out.println("First call returns: " + a);
         	
 	        a = result.helloMandatory();
