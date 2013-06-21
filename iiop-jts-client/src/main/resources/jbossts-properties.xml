@@ -302,8 +302,8 @@
       -->
         <!--
         Propagate the context? (default is INTERPOSITION)
-      -->
         <entry key="com.arjuna.ats.jts.contextPropMode">CONTEXT</entry>
+      -->
 
 
 

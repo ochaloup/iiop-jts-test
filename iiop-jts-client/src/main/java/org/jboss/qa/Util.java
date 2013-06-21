@@ -6,33 +6,39 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.omg.CORBA.SystemException;
+import org.omg.CORBA.ORBPackage.InvalidName;
+
+import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.jts.ORBManager;
 import com.arjuna.ats.jts.OTSManager;
 import com.arjuna.orbportability.ORB;
 import com.arjuna.orbportability.RootOA;
 
 public class Util {
-	// private static CurrentImple corbaTx;
 	public static final String HOST = "127.0.0.1";
+	private static ORB orb = null;
 	
-	public static void setJacorbSystemProperties() {
+	public static void presetOrb() throws InvalidName, SystemException {
 		 System.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
 		 System.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
-		 // System.setProperty("com.sun.CORBA.ORBUseDynamicStub", "true");
+	    
+		 // RecoveryManager.main(new String[] {"-test"});
+		 
+		 orb = com.arjuna.orbportability.ORB.getInstance("ClientSide");
+	     RootOA oa = com.arjuna.orbportability.OA.getRootOA(orb);
+	     orb.initORB(new String[] {}, null);
+	     oa.initOA();
+	     ORBManager.setORB(orb);
+	     ORBManager.setPOA(oa);
 	}
 	
-    public static void startCorbaTx() throws Throwable {
-    	setJacorbSystemProperties();
-    	final Properties prop = new Properties();
-    	prop.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
-		prop.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
-    	
-        ORB orb = com.arjuna.orbportability.ORB.getInstance("ClientSide");
-        RootOA oa = com.arjuna.orbportability.OA.getRootOA(orb);
-        orb.initORB(new String[] {}, prop);
-        oa.initOA();
-        ORBManager.setORB(orb);
-        ORBManager.setPOA(oa);
+	public static void tearDownOrb() {
+		orb.shutdown();
+		RecoveryManager.manager().terminate();
+	}
+	
+    public static void startCorbaTx() throws Throwable {            
         OTSManager.get_current().begin();
     }
     
